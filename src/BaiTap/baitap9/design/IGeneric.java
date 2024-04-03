@@ -1,15 +1,19 @@
-package BaiTap.baitap8.design;
+package BaiTap.baitap9.design;
 
 import java.util.List;
 
-public interface IGeneric <T,E>{
+public interface IGeneric <T, E>{
 
-    T findById(E id);
+    T findByName(E name);
+
     void addNew();
-    void displayAll();
     void editElement();
+    void displayAll();
     void deleteElement();
 
     List<T> readData();
+
     void writeData();
+
+
 }

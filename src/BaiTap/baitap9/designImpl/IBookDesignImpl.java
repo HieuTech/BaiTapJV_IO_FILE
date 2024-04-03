@@ -1,23 +1,28 @@
-package BaiTap.baitap8.designImpl;
+package BaiTap.baitap9.designImpl;
+
 
 import BaiTap.baitap8.config.AppendObjectOutputStream;
-import BaiTap.baitap8.config.ShopConfig;
-import BaiTap.baitap8.design.IProductDesign;
+import BaiTap.baitap8.designImpl.IProductDesignImpl;
 import BaiTap.baitap8.entity.Product;
+import BaiTap.baitap9.config.ShopConfig;
+import BaiTap.baitap9.design.IBookDesign;
+import BaiTap.baitap9.entity.Book;
+
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IProductDesignImpl implements IProductDesign {
-    public static List<Product> productList = new ArrayList<>();
-    public String filePath = "/Users/suongtran/Desktop/JavaLearn/Session18_IO_FILE/src/BaiTap/baitap8/config/baitap8.txt";
+public class IBookDesignImpl implements IBookDesign {
+    private final String  filePath = "/Users/suongtran/Desktop/JavaLearn/Session18_IO_FILE/src/BaiTap/baitap9/config/baitap9.txt";
+
+    private static List<Book> bookList = new ArrayList<>();
 
     @Override
-    public Product findById(String id) {
-        for (Product product : productList) {
-            if (product.getId().equals(id)) {
-                return product;
+    public Book findByName(String title) {
+        for (Book book: bookList){
+            if(title.equals(book.getTitle())){
+                return book;
             }
         }
         return null;
@@ -25,67 +30,57 @@ public class IProductDesignImpl implements IProductDesign {
 
     @Override
     public void addNew() {
-        System.out.println("How many product you want to add");
-        byte count = ShopConfig.getByte();
-        for (int i = 1; i <= count; i++) {
-            System.out.printf("Product Number %d \n", i);
-            Product product = new Product();
-            product.inputData(true, productList);
-            productList.add(product);
-        }
-        System.out.println("Add successfully");
-    }
+        System.out.println(" Book Info");
+        Book book = new Book();
+        book.inputData();
+        bookList.add(book);
 
-    @Override
-    public void displayAll() {
-        if (productList.isEmpty()) {
-            System.out.println("product list is empty");
-        } else {
-            productList.forEach(Product::displayData);
-
-        }
     }
 
     @Override
     public void editElement() {
-        System.out.println("Input ProductID");
-        String productID = ShopConfig.getInput();
-        Product updateProduct = findById(productID);
-        if (updateProduct == null) {
-            System.out.println("Product not found");
-        } else {
-            updateProduct.inputData(false, productList);
+        System.out.println("Input book title to update");
+        String title = ShopConfig.inputData();
+        Book updateBook = findByName(title);
+        if(updateBook == null){
+            System.out.println("Book not found");
+        }else{
+            updateBook.inputData();
             System.out.println("Update successfully");
         }
+    }
 
 
+
+    @Override
+    public void displayAll() {
+        bookList.forEach(Book::displayData);
     }
 
     @Override
     public void deleteElement() {
-        System.out.println("Input ProductID");
-        String productID = ShopConfig.getInput();
-        Product deleteProduct = findById(productID);
-        if (deleteProduct == null) {
-            System.out.println("Product not found");
-        } else {
-            productList.remove(deleteProduct);
+        System.out.println("Input book title to delete");
+        String title = ShopConfig.inputData();
+        Book deleteBook = findByName(title);
+        if(deleteBook == null){
+            System.out.println("Book not found");
+        }else{
+            bookList.remove(deleteBook);
             System.out.println("Delete successfully");
         }
-
     }
 
     @Override
-    public List<Product> readData() {
+    public List<Book> readData() {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
-        List<Product> list = new ArrayList<>();
+        List<Book> list = new ArrayList<>();
         try {
             fis = new FileInputStream(filePath);
             ois = new ObjectInputStream(fis);
             while (true) {
-                Product product = (Product) ois.readObject();
-                list.add(product);
+                Book book = (Book) ois.readObject();
+                list.add(book);
             }
         } catch (IOException e) {
 
@@ -123,8 +118,8 @@ public class IProductDesignImpl implements IProductDesign {
                 oos = new ObjectOutputStream(fos);
             }
 
-            for (Product product : IProductDesignImpl.productList) {
-                oos.writeObject(product);
+            for (Book book : IBookDesignImpl.bookList) {
+                oos.writeObject(book);
             }
             System.out.println("Write successfully");
 

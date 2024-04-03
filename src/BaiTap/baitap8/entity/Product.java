@@ -2,15 +2,16 @@ package BaiTap.baitap8.entity;
 
 import BaiTap.baitap8.config.ShopConfig;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Product {
+public class Product implements Serializable {
     private String id;
     private String productName;
     private String producer;
     private float price;
 
-    public Product() {
+    public Product(){
     }
 
     public Product(String id, String productName, String producer, float price, String desc) {
@@ -73,15 +74,19 @@ public class Product {
                 ", desc='" + desc + '\'' +
                 '}';
     }
-
-    public void displayData(Product product){
-        System.out.println(product.toString());
+    public void displayData(){
+        System.out.printf("| ID : %-5s | Name : %-15s | price : %-3s |\n",
+                id,productName,price);
+        System.out.println("------------------------------------------------------------------------");
     }
 
-    public void inputData(List<Product> productList) {
 
-        this.id = checkInputProductID(productList);
-        this.productName = checkInputProductID(productList);
+
+    public void inputData(boolean isAdd, List<Product> productList) {
+        if(isAdd){
+            this.id = checkInputProductID(productList);
+        }
+        this.productName = checkProductName(productList);
         this.desc = checkDescription();
         this.price = checkPrice();
         this.producer = checkProducer();
@@ -138,7 +143,7 @@ public class Product {
     public String checkDescription(){
 
         while (true){
-            System.out.println("Input Producer");
+            System.out.println("Input description");
             String description = ShopConfig.getInput();
             if(description.length() > 5 && description.length() < 50){
                 return description;
@@ -149,7 +154,7 @@ public class Product {
     }
     public float checkPrice(){
         while (true){
-            System.out.println("Input Producer");
+            System.out.println("Input price");
             float price = ShopConfig.getFloat();
             if(price > 0){
                 return price;
