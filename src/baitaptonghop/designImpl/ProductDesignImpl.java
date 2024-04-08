@@ -60,8 +60,8 @@ public class ProductDesignImpl implements IProduct {
     public void displayData() {
         productList.forEach(Product::displayData);
         System.out.println("-----READ__DATA-----");
-        List<Categories> list =         IOFile.readObjectFromFile(IOFile.PATH_PRODUCT);
-        list.forEach(Categories::displayData);
+        List<Product> list = IOFile.readObjectFromFile(IOFile.PATH_PRODUCT);
+        list.forEach(Product::displayData);
     }
 
     @Override
@@ -78,6 +78,14 @@ public class ProductDesignImpl implements IProduct {
         IOFile.writeData(IOFile.PATH_PRODUCT, productList);
 
     }
+
+    @Override
+    public void sortByCreateDate(){
+        System.out.println("Array after sort date");
+        productList.stream().sorted(Comparator.comparing(Product::getCreated)).forEach(Product::displayData);
+    }
+
+
 
 
 

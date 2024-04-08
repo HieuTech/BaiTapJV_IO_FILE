@@ -10,4 +10,6 @@ public interface IProduct extends IGeneric<Product, String>{
 
     void findProductByRangePrice();
 
+    void sortByCreateDate();
+
 }

@@ -7,12 +7,19 @@ import baitaptonghop.design.ICategories;
 import baitaptonghop.entity.Categories;
 import baitaptonghop.entity.Product;
 
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CategoriesDesignImpl implements ICategories {
+
     public static List<Categories> categoriesList = new ArrayList<>();
+    static{
+//        categoriesList = IOFile.readObjectFromFile;
+    }
+
 
     @Override
     public Categories findById(Integer id) {

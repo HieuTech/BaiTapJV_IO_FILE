@@ -19,6 +19,7 @@ public class ProductManagement {
             System.out.println("5. Sắp xếp các sản phẩm theo giá");
             System.out.println("6. Tìm kiếm các sản phẩm theo tên sản phẩm");
             System.out.println("7. Tìm kiếm sản phẩm trong khoảng giá a – b (a,b nhập từ bàn phím)");
+            System.out.println("9. Sap xep theo ngay tao");
             System.out.println("8. Sign out ");
             byte choice = ShopConfig.getByte();
             boolean isExist = false;
@@ -28,7 +29,6 @@ public class ProductManagement {
                     break;
                 case 2:
                     iProductDesign.displayData();
-                    System.out.println("------READ_DATA---------");
                     break;
                 case 3:
                     iProductDesign.editElement();
@@ -44,6 +44,9 @@ public class ProductManagement {
                     break;
                 case 7:
                     iProductDesign.findProductByRangePrice();
+                    break;
+                case 9:
+                    iProductDesign.sortByCreateDate();
                     break;
                 case 8:
                     isExist = true;
